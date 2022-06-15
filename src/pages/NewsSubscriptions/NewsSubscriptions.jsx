@@ -1,4 +1,4 @@
-import "./Courses.css";
+import "./NewsSubscriptions.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -8,47 +8,35 @@ import { DeleteOutline } from "@material-ui/icons";
 import { Button, Hidden, Link } from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useHistory } from "react-router-dom";
 import LoadingPanel from "../../components/loader/loader";
 import moment from "moment";
 
-export default function Courses() {
+export default function NewsSubscriptions() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const history = useHistory();
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      const response = await axios.get(`${process.env.React_App_baseURL}/courses`);
-      setData(response.data.courses);
-      console.log(response.data.courses);
+    const fetchSubscriptions = async () => {
+      const { data } = await axios.get(`${process.env.React_App_baseURL}/subscriptions`);
+      setData(data.subscriptions);
+      console.log(data.subscriptions);
       setLoading(false);
     }
-    fetchCourses();
+    fetchSubscriptions();
   }, []);
 
   const handleDelete = async (id) => {
-    await axios.delete(`${process.env.React_App_baseURL}/courses/${id}`)
+    await axios.delete(`${process.env.React_App_baseURL}/subscriptions/${id}`)
       .then(({ data }) => toast.success(data.message));
     setData(data.filter((item) => item._id !== id));
   }
 
   const columns = [
     { field: "id", headerName: "ID", width: 330, hide: true },
+    { field: "user_name", headerName: "Subscriber Name", width: 300, },
+    { field: "email", headerName: "Email", width: 300 },
     {
-      field: "title", headerName: "Title", width: 300,
-      renderCell: (params) => {
-        return (
-          <div className="productListItem">
-            <img className="productListImg" src={`${process.env.React_App_uploadURL}/${params.row.image}`} />
-            {params.row.title}
-          </div>
-        );
-      },
-    },
-    { field: "description", headerName: "Description", width: 750 },
-    {
-      field: "createdAt", headerName: "Published on", width: 200,
+      field: "createdAt", headerName: "Subscribed on", width: 200,
       valueFormatter: (params) => moment(params.value).format('DD-MMM-YYYY hh:mm a'),
     },
     {
@@ -57,15 +45,10 @@ export default function Courses() {
       width: 100,
       renderCell: (params) => {
         return (
-          <>
-            <Link href={"/courses/update/" + params.row.id}>
-              <button className="productListEdit">Edit</button>
-            </Link>
-            <DeleteOutline
-              className="productListDelete"
-              onClick={() => handleDelete(params.row.id)}
-            />
-          </>
+          <DeleteOutline
+            className="productListDelete"
+            onClick={() => handleDelete(params.row.id)}
+          />
         );
       },
     },
@@ -78,9 +61,9 @@ export default function Courses() {
         <Sidebar />
         <div className="productList">
           <div className="productTitleContainer">
-            <h2 className="productTitle">All Courses</h2>
-            <Link href="/newcourse">
-              <Button variant="contained" color="primary" component="label" >Create New</Button>
+            <h2 className="productTitle">Newsletter Subscribers</h2>
+            <Link href="/categories/create">
+              <Button variant="contained" color="primary" component="label" hidden >Create New</Button>
             </Link>
           </div>
           {(loading) ? <LoadingPanel /> : (
@@ -91,7 +74,7 @@ export default function Courses() {
               pageSize={15}
               rowHeight={40}
               checkboxSelection
-              style={{ height: '800px' }}
+              style={{ height: '700px' }}
             />
           )}
         </div>

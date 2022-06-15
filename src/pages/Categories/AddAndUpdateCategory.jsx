@@ -5,17 +5,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Grid, Paper, TextField, Button, Typography, Link } from '@material-ui/core'
 import axios from 'axios';
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-export default function AddUpdateCategory() {
-  const [categoryName, setCategoryName] = useState("");
+export default function AddAndUpdateCategory() {
+  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const history = useHistory();
   const params = useParams();
-  const token = localStorage.getItem("token");
-  axios.defaults.headers.common['Authorization'] = token;
 
   useEffect(() => {
     getCategoryById();
@@ -23,47 +20,53 @@ export default function AddUpdateCategory() {
 
   const getCategoryById = async () => {
     await axios
-        .get(`${process.env.React_App_baseURL}/category/${params.id}`)
-        .then(({ data }) => {
-          if (data.status === 200) {
-            setCategoryName(data.category.category_name);
-            setDescription(data.category.description);
-            setIsEditMode(true);
-          }
-        });
+      .get(`${process.env.React_App_baseURL}/categories/${params.id}`)
+      .then(({ data }) => {
+        console.log(data);
+        if (data.success) {
+          setName(data.category.name);
+          setDescription(data.category.description);
+          setIsEditMode(true);
+        }
+      });
   }
+
+  // function to clear form fields
+  const clearForm = () => {
+    setName("");
+    setDescription("");
+  }
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem("token");
-    axios.defaults.headers.common['Authorization'] = token;
+    const category = { name, description };
 
     try {
       if (isEditMode) {
         await axios
-          .put(`${process.env.React_App_baseURL}/category/update/${params.id}`, {category_name: categoryName, description})
+          .put(`${process.env.React_App_baseURL}/categories/${params.id}`, category)
           .then(({ data }) => {
-            if (data.status === 200) {
-              // toast.success("Product add successfully!");
-              history.push("/categories");
+            if (data.success) {
+              toast.success("Category updated successfully!");
+              // history.push("/categories");
             }
           });
       } else {
-
         await axios
-          .post(`${process.env.React_App_baseURL}/category/create`, {category_name: categoryName, description})
+          .post(`${process.env.React_App_baseURL}/categories`, category)
           .then(({ data }) => {
-            if (data.status === 200) {
-              // toast.success("Product add successfully!");
-              history.push("/categories");
+            if (data.success) {
+              toast.success("Category added successfully!");
+              clearForm();
+              // history.push("/categories");
             }
           });
       }
 
     } catch (error) {
-      let message = error.response ? error.response.data.message : "Only image files are allowed!";
-      toast.error(message);
+      toast.error(error);
     }
   };
 
@@ -80,19 +83,19 @@ export default function AddUpdateCategory() {
             <Grid>
               <Paper elevation={0} style={paperStyle}>
                 <Grid align='left'>
-                  <h2>{isEditMode ? "Update Category" : "New Category"}</h2>
+                  <h2>{isEditMode ? "Update Article Category" : "New Article Category"}</h2>
                 </Grid>
                 <br />
                 <form>
-                  <TextField className="addProductItem" label='Category Name' placeholder='Enter Category Name' fullWidth name="category_name" value={categoryName} onChange={(e) => setCategoryName(e.target.value)} />
+                  <TextField className="addProductItem" label='Category Name' placeholder='Enter Category Name' fullWidth name="name" value={name} onChange={(e) => setName(e.target.value)} />
                   <br />
                   <TextField className="addProductItem" label='Description' placeholder="Description" fullWidth multiline minRows={2} maxRows={5} name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
-                  
+                  <br /><br />
                   <Button onClick={handleSubmit} type='submit' color='primary' variant="contained" style={btnstyle} fullWidth>{isEditMode ? "Update Category" : "Create Category"}</Button>
                 </form>
                 <br />
                 <Typography >
-                  <Link href="/products" >
+                  <Link href="/categories" >
                     Back to Category List
                   </Link>
                 </Typography>

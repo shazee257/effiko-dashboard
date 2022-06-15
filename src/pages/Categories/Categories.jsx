@@ -1,3 +1,4 @@
+import "./Categories.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -9,51 +10,45 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from "react-router-dom";
 import LoadingPanel from "../../components/loader/loader";
+import moment from "moment";
 
-export default function CategoryList() {
+export default function Categories() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const history = useHistory();
 
-  const token = localStorage.getItem("token");
-
-  useEffect(async () => {
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = token;
-      await axios.get(`${process.env.React_App_baseURL}/categories`).then(({ data }) => {
-        setData(data.categories);
-        console.log(data.categories);
-        setLoading(false);
-      });
-    } else {
-      history.push("/login");
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await axios.get(`${process.env.React_App_baseURL}/categories`);
+      setData(response.data.categories);
+      console.log(response.data.categories);
+      setLoading(false);
     }
+    fetchCategories();
   }, []);
 
   const handleDelete = async (id) => {
-    await axios.put(`${process.env.React_App_baseURL}/category/delete/${id}`)
+    await axios.delete(`${process.env.React_App_baseURL}/categories/${id}`)
       .then(({ data }) => toast.success(data.message));
     setData(data.filter((item) => item._id !== id));
   }
 
   const columns = [
-    { field: "id", headerName: "ID", width: 230, hide: true },
+    { field: "id", headerName: "ID", width: 330, hide: true },
+    { field: "name", headerName: "Category Name", width: 300, },
+    { field: "description", headerName: "Description", width: 450 },
     {
-      field: "category_name", headerName: "Product", width: 300,
-      renderCell: (params) => {
-        return params.row.category_name;
-      },
+      field: "createdAt", headerName: "Created on", width: 200,
+      valueFormatter: (params) => moment(params.value).format('DD-MMM-YYYY hh:mm a'),
     },
-    { field: "description", headerName: "Description", width: 500 },
     {
       field: "action", filterable: false, sortable: false,
       headerName: "Action",
       width: 100,
       renderCell: (params) => {
-        // console.log(params);
         return (
           <>
-            <Link href={"/category/update/" + params.row.id}>
+            <Link href={"/categories/update/" + params.row.id}>
               <button className="productListEdit">Edit</button>
             </Link>
             <DeleteOutline
@@ -73,8 +68,8 @@ export default function CategoryList() {
         <Sidebar />
         <div className="productList">
           <div className="productTitleContainer">
-            <h2 className="productTitle">All Categories</h2>
-            <Link href="/category/create">
+            <h2 className="productTitle">Article Categories</h2>
+            <Link href="/categories/create">
               <Button variant="contained" color="primary" component="label" >Create New</Button>
             </Link>
           </div>

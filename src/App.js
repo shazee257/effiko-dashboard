@@ -6,12 +6,11 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import UserList from "./pages/userList/UserList";
 import User from "./pages/user/User";
 import NewUser from "./pages/newUser/NewUser";
-import Courses from "./pages/Courses/Courses";
-// import Product from "./pages/product/Product";
-import UpdateCourse from "./pages/UpdateCourse/UpdateCourse";
-import NewCourse from "./pages/NewCourse/NewCourse";
-import AddUpdateCategory from "./pages/category/AddUpdateCategory";
-import CategoryList from "./pages/category/CategoryList";
+
+
+
+
+
 import PackagingList from "./pages/packagingList/PackagingList";
 import GroupedOrderList from "./pages/orderList/GroupedOrderList";
 import OrderList from "./pages/orderList/OrderList";
@@ -29,6 +28,19 @@ import Profile from "./pages/profile/Profile";
 import SubscriptionAcceptance from "./pages/subscriptionAcceptance/SubscriptionAcceptance";
 import GroupBuyList from "./pages/groupBuyList/GroupBuyList";
 
+
+import Courses from "./pages/Courses/Courses";
+import NewCourse from "./pages/Courses/NewCourse";
+import UpdateCourse from "./pages/Courses/UpdateCourse";
+import Categories from "./pages/Categories/Categories";
+import AddAndUpdateCategory from "./pages/Categories/AddAndUpdateCategory";
+import Advisors from "./pages/Advisors/Advisors";
+import NewAdvisor from "./pages/Advisors/NewAdvisor";
+import UpdateAdvisor from "./pages/Advisors/UpdateAdvisor";
+import NewsSubscriptions from "./pages/NewsSubscriptions/NewsSubscriptions";
+import ContactUsMessages from "./pages/ContactUsMessages/ContactUsMessages";
+
+
 function App() {
   return (
     <div className="dgt-app-container">
@@ -38,10 +50,25 @@ function App() {
 
       <Router>
         {/* Courses */}
-        <Route path="/courses/update/:courseId" component={UpdateCourse} />
+        <Route path="/courses/update/:id" component={UpdateCourse} />
         <Route exact path="/courses" component={Courses} />
         <Route path="/newcourse" component={NewCourse} />
 
+        {/* Category */}
+        <Route exact path="/categories/update/:id" component={AddAndUpdateCategory} />
+        <Route exact path="/categories/create" component={AddAndUpdateCategory} />
+        <Route path="/categories" component={Categories} />
+
+        {/* Career Advisors */}
+        <Route path="/advisors/update/:id" component={UpdateAdvisor} />
+        <Route path="/newadvisor" component={NewAdvisor} />
+        <Route path="/advisors" component={Advisors} />
+
+        {/* Newsletter Subscriptions */}
+        <Route path="/subscriptions" component={NewsSubscriptions} />
+
+        {/* Contact Us Messages */}
+        <Route path="/messages" component={ContactUsMessages} />
 
 
 
@@ -63,9 +90,8 @@ function App() {
 
         <Route path="/group-buys" component={GroupBuyList} />
 
-        <Route exact path="/category/create" component={AddUpdateCategory} />
-        <Route exact path="/category/update/:id" component={AddUpdateCategory} />
-        <Route exact path="/categories" component={CategoryList} />
+
+
 
         {/* Each Product Details */}
 

@@ -1,4 +1,4 @@
-import "./Courses.css";
+import "./Advisors.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -12,23 +12,23 @@ import { useHistory } from "react-router-dom";
 import LoadingPanel from "../../components/loader/loader";
 import moment from "moment";
 
-export default function Courses() {
+export default function Advisors() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const history = useHistory();
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      const response = await axios.get(`${process.env.React_App_baseURL}/courses`);
-      setData(response.data.courses);
-      console.log(response.data.courses);
+    const fetchAdvisors = async () => {
+      const { data } = await axios.get(`${process.env.React_App_baseURL}/advisors`);
+      setData(data.advisors);
+      console.log(data.advisors);
       setLoading(false);
     }
-    fetchCourses();
+    fetchAdvisors();
   }, []);
 
   const handleDelete = async (id) => {
-    await axios.delete(`${process.env.React_App_baseURL}/courses/${id}`)
+    await axios.delete(`${process.env.React_App_baseURL}/advisors/${id}`)
       .then(({ data }) => toast.success(data.message));
     setData(data.filter((item) => item._id !== id));
   }
@@ -36,19 +36,21 @@ export default function Courses() {
   const columns = [
     { field: "id", headerName: "ID", width: 330, hide: true },
     {
-      field: "title", headerName: "Title", width: 300,
+      field: "advisor", headerName: "Career Advisors", width: 250,
       renderCell: (params) => {
         return (
           <div className="productListItem">
             <img className="productListImg" src={`${process.env.React_App_uploadURL}/${params.row.image}`} />
-            {params.row.title}
+            {params.row.name}
           </div>
         );
       },
     },
-    { field: "description", headerName: "Description", width: 750 },
+    { field: "description", headerName: "Description", width: 450 },
+    { field: "phone_no", headerName: "Contact No", width: 150 },
+    { field: "linkedin_url", headerName: "LinkedIn Profile", width: 350 },
     {
-      field: "createdAt", headerName: "Published on", width: 200,
+      field: "createdAt", headerName: "Added on", width: 200,
       valueFormatter: (params) => moment(params.value).format('DD-MMM-YYYY hh:mm a'),
     },
     {
@@ -58,7 +60,7 @@ export default function Courses() {
       renderCell: (params) => {
         return (
           <>
-            <Link href={"/courses/update/" + params.row.id}>
+            <Link href={"/advisors/update/" + params.row.id}>
               <button className="productListEdit">Edit</button>
             </Link>
             <DeleteOutline
@@ -78,8 +80,8 @@ export default function Courses() {
         <Sidebar />
         <div className="productList">
           <div className="productTitleContainer">
-            <h2 className="productTitle">All Courses</h2>
-            <Link href="/newcourse">
+            <h2 className="productTitle">Career Advisors</h2>
+            <Link href="/newadvisor">
               <Button variant="contained" color="primary" component="label" >Create New</Button>
             </Link>
           </div>

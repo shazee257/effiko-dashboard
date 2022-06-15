@@ -32,7 +32,7 @@ export default function Topbar() {
           </div>
           <div onClick={handleLogout} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
             <img src="https://www.bastiaanmulder.nl/wp-content/uploads/2013/11/dummy-image-square.jpg" className="topAvatar" />
-            Logout
+            {/* Logout */}
           </div>
         </div>
       </div>

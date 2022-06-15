@@ -99,7 +99,7 @@ export default function Sidebar() {
             <li>
               <NavLink activeClassName="active" to='/messages' className="sidebarListItem link">
                 <SettingsApplications className="sidebarIcon" />
-                Contact Us
+                Users Messages
               </NavLink>
             </li>
 

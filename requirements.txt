@@ -1,0 +1,24 @@
+effiko Dashboard
+
+
+Frontend Completed
+------------------------------------
+
+-- Courses
+-- Categories
+-- Advisors
+-- NewsSubscriptions
+-- ContactUsMessages
+-- 
+
+
+Frontend - Pendings
+------------------------------------
+
+Linkedin
+Interviews
+Books
+Articles
+Our Locations
+
+

@@ -15,11 +15,11 @@ export default function UpdateCourse({ match }) {
   const [img_address, setImg_address] = useState("");
   const [filename, setFilename] = useState("Choose Image");
 
-  const { courseId } = match.params;
+  const { id } = match.params;
 
   useEffect(() => {
     const fetchCourse = async () => {
-      const response = await axios.get(`${process.env.React_App_baseURL}/courses/${courseId}`);
+      const response = await axios.get(`${process.env.React_App_baseURL}/courses/${id}`);
       setTitle(response.data.course.title);
       setDescription(response.data.course.description);
       setImage(response.data.course.image);
@@ -45,7 +45,7 @@ export default function UpdateCourse({ match }) {
       const config = { headers: { 'Content-Type': 'multipart/form-data' } }
 
       await axios
-        .put(`${process.env.React_App_baseURL}/courses/${courseId}/image`, fd, config)
+        .put(`${process.env.React_App_baseURL}/courses/${id}/image`, fd, config)
         .then(({ data }) => toast.success(data.message))
         .catch((err) => {
           let message = err.response ? err.response.data.message : "Only image files are allowed!";
@@ -62,7 +62,7 @@ export default function UpdateCourse({ match }) {
 
     try {
       await axios
-        .put(`${process.env.React_App_baseURL}/courses/${courseId}`, course)
+        .put(`${process.env.React_App_baseURL}/courses/${id}`, course)
         .then(({ data }) => {
           // console.log(data);
           if (data.success) {
