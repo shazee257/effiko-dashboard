@@ -1,4 +1,4 @@
-import "./home.css";
+// import "./home.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -10,8 +10,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingPanel from "../../components/loader/loader";
 import moment from "moment";
+import SimpleMap from "./SimpleMap";
 
-export default function Courses() {
+export default function MapLocations() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -27,6 +28,11 @@ export default function Courses() {
             <Link href="/newcourse">
               <Button variant="contained" color="primary" hidden component="label" >Create New</Button>
             </Link>
+
+          </div>
+          <div style={{ display: 'flex' }}>
+            <SimpleMap />
+            <SimpleMap />
           </div>
         </div>
       </div>

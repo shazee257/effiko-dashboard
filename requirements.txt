@@ -1,5 +1,3 @@
-effiko Dashboard
-
 
 Frontend Completed
 ------------------------------------
@@ -9,16 +7,20 @@ Frontend Completed
 -- Advisors
 -- NewsSubscriptions
 -- ContactUsMessages
+-- Linkedin
+--  
 -- 
-
+-- 
+-- 
 
 Frontend - Pendings
 ------------------------------------
 
-Linkedin
 Interviews
 Books
 Articles
 Our Locations
 
 
+Google API_KEY
+AIzaSyAV-Ytp-Bsw9I_fOw2NKxNqq4vMracossI

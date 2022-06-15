@@ -39,7 +39,9 @@ import NewAdvisor from "./pages/Advisors/NewAdvisor";
 import UpdateAdvisor from "./pages/Advisors/UpdateAdvisor";
 import NewsSubscriptions from "./pages/NewsSubscriptions/NewsSubscriptions";
 import ContactUsMessages from "./pages/ContactUsMessages/ContactUsMessages";
-
+import Linkedin from "./pages/Linkedin/Linkedin";
+import Locations from "./pages/Locations/Locations";
+import NewLocation from "./pages/Locations/NewLocation";
 
 function App() {
   return (
@@ -70,6 +72,14 @@ function App() {
         {/* Contact Us Messages */}
         <Route path="/messages" component={ContactUsMessages} />
 
+        {/* LinkedIn Optimization */}
+        <Route path="/linkedin" component={Linkedin} />
+
+        {/* Office Locations */}
+        <Route path="/locations" component={Locations} />
+        <Route exact path="/newlocation" component={NewLocation} />
+
+        {/* <Route path={"/map"} component={MapLocation} /> */}
 
 
 
