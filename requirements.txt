@@ -8,7 +8,7 @@ Frontend Completed
 -- NewsSubscriptions
 -- ContactUsMessages
 -- Linkedin
---  
+-- Our Locations
 -- 
 -- 
 -- 
@@ -19,7 +19,9 @@ Frontend - Pendings
 Interviews
 Books
 Articles
-Our Locations
+
+
+
 
 
 Google API_KEY
