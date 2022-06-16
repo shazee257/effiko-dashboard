@@ -1,5 +1,6 @@
 {
   "name": "effiko-dashboard",
+  "homepage": "https://www.janisk.encodersys.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
