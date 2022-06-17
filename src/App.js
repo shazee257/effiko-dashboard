@@ -42,6 +42,9 @@ import ContactUsMessages from "./pages/ContactUsMessages/ContactUsMessages";
 import Linkedin from "./pages/Linkedin/Linkedin";
 import Locations from "./pages/Locations/Locations";
 import NewLocation from "./pages/Locations/NewLocation";
+import Interviews from "./pages/Interviews/Interviews";
+import AddAndUpdateInterview from "./pages/Interviews/AddAndUpdateInterview";
+import Books from "./pages/Books/Books";
 
 function App() {
   return (
@@ -80,6 +83,16 @@ function App() {
         <Route exact path="/newlocation" component={NewLocation} />
 
         {/* <Route path={"/map"} component={MapLocation} /> */}
+        {/* Interviews */}
+        <Route exact path="/interviews/update/:id" component={AddAndUpdateInterview} />
+        <Route exact path="/interviews/create" component={AddAndUpdateInterview} />
+        <Route path="/interviews" component={Interviews} />
+
+        {/* Author */}
+        {/* <Route path="/courses/update/:id" component={UpdateCourse} /> */}
+        <Route exact path="/books" component={Books} />
+        {/* <Route path="/newcourse" component={NewCourse} /> */}
+
 
 
 

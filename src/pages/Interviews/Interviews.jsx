@@ -1,4 +1,4 @@
-import "./Courses.css";
+import "./Interviews.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -12,43 +12,42 @@ import { useHistory } from "react-router-dom";
 import LoadingPanel from "../../components/loader/loader";
 import moment from "moment";
 
-export default function Courses() {
+export default function Interviews() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const history = useHistory();
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      const response = await axios.get(`${process.env.React_App_baseURL}/courses`);
-      setData(response.data.courses);
-      console.log(response.data.courses);
+    const fetchInterviews = async () => {
+      const { data } = await axios.get(`${process.env.React_App_baseURL}/interviews`);
+      setData(data.interviews);
+      console.log(data.interviews);
       setLoading(false);
     }
-    fetchCourses();
+    fetchInterviews();
   }, []);
 
   const handleDelete = async (id) => {
-    await axios.delete(`${process.env.React_App_baseURL}/courses/${id}`)
+    await axios.delete(`${process.env.React_App_baseURL}/interviews/${id}`)
       .then(({ data }) => toast.success(data.message));
     setData(data.filter((item) => item._id !== id));
   }
 
   const columns = [
     { field: "id", headerName: "ID", width: 330, hide: true },
+    { field: "title", headerName: "Title", width: 320, },
+    { field: "description", headerName: "Description", width: 550 },
     {
-      field: "title", headerName: "Title", width: 300,
+      field: "url", headerName: "Youtube link", width: 180,
       renderCell: (params) => {
         return (
-          <div className="productListItem">
-            <img className="productListImg" src={`${process.env.React_App_uploadURL}/${params.row.image}`} />
-            {params.row.title}
-          </div>
+          <Link href={params.value} target="_blank">
+            <button className="productListEdit">Watch Interview</button>
+          </Link>
         );
-      },
+      }
     },
-    { field: "description", headerName: "Description", width: 750 },
     {
-      field: "createdAt", headerName: "Published on", width: 200,
+      field: "createdAt", headerName: "Posted on", width: 200,
       valueFormatter: (params) => moment(params.value).format('DD-MMM-YYYY hh:mm a'),
     },
     {
@@ -58,7 +57,7 @@ export default function Courses() {
       renderCell: (params) => {
         return (
           <>
-            <Link href={"/courses/update/" + params.row.id}>
+            <Link href={"/interviews/update/" + params.row.id}>
               <button className="productListEdit">Edit</button>
             </Link>
             <DeleteOutline
@@ -78,8 +77,8 @@ export default function Courses() {
         <Sidebar />
         <div className="productList">
           <div className="productTitleContainer">
-            <h2 className="productTitle">All Courses</h2>
-            <Link href="/newcourse">
+            <h2 className="productTitle">Interviews</h2>
+            <Link href="/interviews/create">
               <Button variant="contained" color="primary" component="label" >Create New</Button>
             </Link>
           </div>
@@ -91,7 +90,6 @@ export default function Courses() {
               pageSize={15}
               rowHeight={40}
               checkboxSelection
-              rowsPerPageOptions={[15, 30, 45, 60]}
               style={{ height: '800px' }}
             />
           )}
