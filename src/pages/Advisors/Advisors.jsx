@@ -10,7 +10,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from "react-router-dom";
 import LoadingPanel from "../../components/loader/loader";
-import moment from "moment";
+const { formatDate } = require("../../utils/utils");
+
 
 export default function Advisors() {
   const [data, setData] = useState([]);
@@ -36,7 +37,7 @@ export default function Advisors() {
   const columns = [
     { field: "id", headerName: "ID", width: 330, hide: true },
     {
-      field: "advisor", headerName: "Career Advisors", width: 250,
+      field: "advisor", headerName: "Career Advisors", width: 220,
       renderCell: (params) => {
         return (
           <div className="productListItem">
@@ -46,12 +47,21 @@ export default function Advisors() {
         );
       },
     },
-    { field: "description", headerName: "Description", width: 450 },
+    { field: "description", headerName: "Description", width: 330 },
     { field: "phone_no", headerName: "Contact No", width: 150 },
-    { field: "linkedin_url", headerName: "LinkedIn Profile", width: 350 },
     {
-      field: "createdAt", headerName: "Added on", width: 200,
-      valueFormatter: (params) => moment(params.value).format('DD-MMM-YYYY hh:mm a'),
+      field: "linkedin_url", headerName: "LinkedIn URL", width: 160,
+      renderCell: (params) => {
+        return (
+          <Link href={params.value} target="_blank">
+            <button className="productListEdit">LinkedIn Profile</button>
+          </Link>
+        );
+      }
+    },
+    {
+      field: "createdAt", headerName: "Added on", width: 140,
+      valueFormatter: (params) => formatDate(params.value),
     },
     {
       field: "action", filterable: false, sortable: false,
@@ -90,10 +100,11 @@ export default function Advisors() {
               rows={data}
               disableSelectionOnClick
               columns={columns}
-              pageSize={15}
+              pageSize={10}
               rowHeight={40}
               checkboxSelection
-              style={{ height: '800px' }}
+              // rowsPerPageOptions={[10, 20, 30, 40, 50]}
+              style={{ height: '550px' }}
             />
           )}
         </div>

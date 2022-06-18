@@ -8,14 +8,13 @@ import { DeleteOutline, CloudUploadRounded } from "@material-ui/icons";
 import { Button, Hidden, Link } from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useHistory } from "react-router-dom";
 import LoadingPanel from "../../components/loader/loader";
-import moment from "moment";
+const { formatDate } = require("../../utils/utils");
 
 export default function Books() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const history = useHistory();
+  const [pdf, setPdf] = useState("");
 
   useEffect(() => {
     fetchBooks();
@@ -34,43 +33,43 @@ export default function Books() {
     setData(data.filter((item) => item._id !== id));
   }
 
-  const handleSubmit = async (e) => {
+  const handleUpload = async (e, id) => {
     e.preventDefault();
 
-    const pdf = document.querySelector("#pdf");
+    if (!pdf.name) {
+      toast.error("Please select a file");
+      return;
+    }
 
-    console.log("Value is : ", pdf.file.length);
+    const formData = new FormData();
+    formData.append('pdf', pdf);
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
 
+    await axios.post(`${process.env.React_App_baseURL}/books/${id}/upload`, formData, config)
+      .then(({ data }) => {
+        if (data.success) {
+          toast.success && toast.success(data.message);
+          // history.push("/books");
+        } else {
+          toast.error("Book is not added!, please try again");
+        }
+      }).catch(error => {
+        let message = error.response ? error.response.data.message : "Only image files are allowed!";
+        toast.error(message);
+      });
 
-    return;
-    // const formData = new FormData(e.target);
-    // const config = {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data'
-    //   }
-    // }
-
-    // return console.log(e.target, id);
-    // await axios.post(`${process.env.React_App_baseURL}/books/${e}/upload`, formData, config)
-    //   .then(({ data }) => {
-    //     if (data.success) {
-    //       toast.success && toast.success(data.message);
-    //       history.push("/books");
-    //     } else {
-    //       toast.error("Book is not added!, please try again");
-    //     }
-    //   }).catch(error => {
-    //     let message = error.response ? error.response.data.message : "Only image files are allowed!";
-    //     toast.error(message);
-    //   });
+    fetchBooks();
+    setPdf("");
   }
-
-
 
   const columns = [
     { field: "id", headerName: "ID", width: 330, hide: true },
     {
-      field: "title", headerName: "Title", width: 320,
+      field: "title", headerName: "Title", width: 210,
       renderCell: (params) => {
         return (
           <div className="productListItem">
@@ -80,40 +79,43 @@ export default function Books() {
         );
       },
     },
-    { field: "author", headerName: "Author", width: 240 },
+    { field: "author", headerName: "Author", width: 190 },
     {
-      field: "createdAt", headerName: "Published on", width: 200,
-      valueFormatter: (params) => moment(params.value).format('DD-MMM-YYYY hh:mm a'),
+      field: "createdAt", headerName: "Added on", width: 140,
+      valueFormatter: (params) => formatDate(params.value),
     },
     {
-      field: "pdf", filterable: false, sortable: false, headerName: "Books (PDF)", width: 150,
+      field: "pdf", filterable: false, sortable: false, headerName: "Books", width: 120,
       renderCell: (params) => {
         return (
           <>
             <Link target="_blank" rel="noopener noreferrer" href={`${process.env.React_App_uploadURL}/` + params.row.pdf}>
-              <button className="productListEdit">Click to Read Book</button>
+              {params.row.pdf ? (
+                <button className="productListEdit">
+                  Read Book
+                </button>
+              ) : (
+                <button className="bookNA">
+                  Not Available
+                </button>
+              )}
+
             </Link>
-            <Button className="productListEdit" onClick={() => handleDelete(params.row.id)}>
-              <CloudUploadRounded style={{ height: '15px' }} />
-            </Button>
           </>
         );
       },
     },
     {
-      field: "upload", filterable: false, sortable: false, headerName: "Upload Book", width: 490,
+      field: "upload", filterable: false, sortable: false, headerName: "Upload Book", width: 320,
       renderCell: (params) => {
         return (
           <>
             <form encType='multipart/form-data'>
-              <Button variant="contained" component="label">
-                <input type="file" id="pdf" name="pdf" accept="application/pdf" />
-              </Button>
-              <Button onClick={handleSubmit} type='submit' color='secondary' variant="contained">Publish</Button>
+              <input type="file" id="pdf" name="pdf" accept="application/pdf" onChange={(e) => setPdf(e.target.files[0])} />
+              <Button onClick={(e) => handleUpload(e, params.row.id)} size="small"
+                variant="contained" color="primary">Publish</Button>
             </form>
-
           </>
-
         );
       },
     },
@@ -154,11 +156,11 @@ export default function Books() {
               rows={data}
               disableSelectionOnClick
               columns={columns}
-              pageSize={15}
+              pageSize={10}
               rowHeight={40}
               checkboxSelection
-              rowsPerPageOptions={[15, 30, 45, 60]}
-              style={{ height: '800px' }}
+              // rowsPerPageOptions={[15, 30, 45, 60]}
+              style={{ height: '550px' }}
             />
           )}
         </div>

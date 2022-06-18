@@ -10,7 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from "react-router-dom";
 import LoadingPanel from "../../components/loader/loader";
-import moment from "moment";
+const { formatDate } = require("../../utils/utils");
 
 export default function Categories() {
   const [data, setData] = useState([]);
@@ -18,14 +18,15 @@ export default function Categories() {
   const history = useHistory();
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      const response = await axios.get(`${process.env.React_App_baseURL}/categories`);
-      setData(response.data.categories);
-      console.log(response.data.categories);
-      setLoading(false);
-    }
     fetchCategories();
   }, []);
+
+  const fetchCategories = async () => {
+    const response = await axios.get(`${process.env.React_App_baseURL}/categories`);
+    setData(response.data.categories);
+    console.log(response.data.categories);
+    setLoading(false);
+  }
 
   const handleDelete = async (id) => {
     await axios.delete(`${process.env.React_App_baseURL}/categories/${id}`)
@@ -35,11 +36,11 @@ export default function Categories() {
 
   const columns = [
     { field: "id", headerName: "ID", width: 330, hide: true },
-    { field: "name", headerName: "Category Name", width: 300, },
-    { field: "description", headerName: "Description", width: 450 },
+    { field: "name", headerName: "Category Name", width: 280, },
+    { field: "description", headerName: "Description", width: 500 },
     {
-      field: "createdAt", headerName: "Created on", width: 200,
-      valueFormatter: (params) => moment(params.value).format('DD-MMM-YYYY hh:mm a'),
+      field: "createdAt", headerName: "Created on", width: 150,
+      valueFormatter: (params) => formatDate(params.value),
     },
     {
       field: "action", filterable: false, sortable: false,
@@ -78,10 +79,10 @@ export default function Categories() {
               rows={data}
               disableSelectionOnClick
               columns={columns}
-              pageSize={15}
+              pageSize={10}
               rowHeight={40}
               checkboxSelection
-              style={{ height: '800px' }}
+              style={{ height: '550px' }}
             />
           )}
         </div>

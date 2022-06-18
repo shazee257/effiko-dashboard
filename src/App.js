@@ -45,6 +45,7 @@ import NewLocation from "./pages/Locations/NewLocation";
 import Interviews from "./pages/Interviews/Interviews";
 import AddAndUpdateInterview from "./pages/Interviews/AddAndUpdateInterview";
 import Books from "./pages/Books/Books";
+import NewBook from "./pages/Books/NewBook";
 
 function App() {
   return (
@@ -91,7 +92,7 @@ function App() {
         {/* Author */}
         {/* <Route path="/courses/update/:id" component={UpdateCourse} /> */}
         <Route exact path="/books" component={Books} />
-        {/* <Route path="/newcourse" component={NewCourse} /> */}
+        <Route path="/newbook" component={NewBook} />
 
 
 

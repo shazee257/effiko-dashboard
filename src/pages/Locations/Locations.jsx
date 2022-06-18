@@ -9,7 +9,7 @@ import { Button, Hidden, Link } from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingPanel from "../../components/loader/loader";
-import moment from "moment";
+const { formatDate } = require("../../utils/utils");
 
 export default function Locations() {
   const [data, setData] = useState([]);
@@ -41,7 +41,7 @@ export default function Locations() {
     },
     {
       field: "createdAt", headerName: "Created on", width: 200,
-      valueFormatter: (params) => moment(params.value).format('DD-MMM-YYYY hh:mm a'),
+      valueFormatter: (params) => formatDate(params.value),
     },
     {
       field: "action", filterable: false, sortable: false,
@@ -75,10 +75,10 @@ export default function Locations() {
               rows={data}
               disableSelectionOnClick
               columns={columns}
-              pageSize={15}
+              pageSize={10}
               rowHeight={40}
               checkboxSelection
-              style={{ height: '700px' }}
+              style={{ height: '550px' }}
             />
           )}
         </div>

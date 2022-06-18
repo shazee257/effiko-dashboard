@@ -9,7 +9,7 @@ import { Button, Hidden, Link } from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingPanel from "../../components/loader/loader";
-import moment from "moment";
+const { formatDate } = require("../../utils/utils");
 
 export default function ContactUsMessages() {
   const [data, setData] = useState([]);
@@ -33,12 +33,12 @@ export default function ContactUsMessages() {
 
   const columns = [
     { field: "id", headerName: "ID", width: 330, hide: true },
-    { field: "user_name", headerName: "User Name", width: 250, },
-    { field: "email", headerName: "Email", width: 250 },
-    { field: "body", headerName: "Message", width: 400 },
+    { field: "user_name", headerName: "User Name", width: 180, },
+    { field: "email", headerName: "Email", width: 220 },
+    { field: "body", headerName: "Message", width: 380 },
     {
       field: "createdAt", headerName: "Message sent on", width: 200,
-      valueFormatter: (params) => moment(params.value).format('DD-MMM-YYYY hh:mm a'),
+      valueFormatter: (params) => formatDate(params.value),
     },
     {
       field: "action", filterable: false, sortable: false,
@@ -72,10 +72,11 @@ export default function ContactUsMessages() {
               rows={data}
               disableSelectionOnClick
               columns={columns}
-              pageSize={15}
+              pageSize={10}
               rowHeight={40}
+              // rowsPerPageOptions={[8, 16, 24, 32]}
               checkboxSelection
-              style={{ height: '700px' }}
+              style={{ height: '550px' }}
             />
           )}
         </div>

@@ -36,7 +36,7 @@ export default function Courses() {
   const columns = [
     { field: "id", headerName: "ID", width: 330, hide: true },
     {
-      field: "title", headerName: "Title", width: 300,
+      field: "title", headerName: "Title", width: 320,
       renderCell: (params) => {
         return (
           <div className="productListItem">
@@ -46,10 +46,10 @@ export default function Courses() {
         );
       },
     },
-    { field: "description", headerName: "Description", width: 550 },
+    { field: "description", headerName: "Description", width: 500 },
     {
-      field: "createdAt", headerName: "Published on", width: 200,
-      valueFormatter: (params) => moment(params.value).format('DD-MMM-YYYY hh:mm a'),
+      field: "createdAt", headerName: "Published on", width: 160,
+      valueFormatter: (params) => moment(params.value).format('DD-MMM-YYYY'),
     },
     {
       field: "action", filterable: false, sortable: false,
@@ -88,11 +88,11 @@ export default function Courses() {
               rows={data}
               disableSelectionOnClick
               columns={columns}
-              pageSize={8}
+              pageSize={10}
               rowHeight={40}
               checkboxSelection
-              rowsPerPageOptions={[15, 30, 45, 60]}
-              style={{ height: '500px' }}
+              // rowsPerPageOptions={[15, 30, 45, 60]}
+              style={{ height: '550px' }}
             />
           )}
         </div>

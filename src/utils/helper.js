@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 export const showNotification = (errorResponse, message, type = 'success') => {
   try {
-    
+
     if (errorResponse && errorResponse.response) {
       if (errorResponse.response.data) toast.error(errorResponse.response.data.message || "Request couldn't be completed");
     } else if (message && type) {
@@ -18,3 +18,4 @@ export const showNotification = (errorResponse, message, type = 'success') => {
     toast.error("Server responded with some error, Try contacting support team.");
   }
 }
+

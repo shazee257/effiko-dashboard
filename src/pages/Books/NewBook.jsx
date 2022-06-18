@@ -1,4 +1,4 @@
-import "./NewCourse.css";
+import "./NewBook.css";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Topbar from "../../components/topbar/Topbar";
 import { useEffect, useState } from "react";
@@ -6,12 +6,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Grid, Paper, TextField, Button, Typography, Link, Select, InputLabel, MenuItem, FormControl } from '@material-ui/core'
 import axios from 'axios';
-import { DeleteOutline } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 
-export default function NewCourse() {
+export default function NewBook() {
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [author, setAuthor] = useState("");
   const [image, setImage] = useState("");
   const [filename, setFilename] = useState("Choose Image");
   const [selectedFile, setSelectedFile] = useState("");
@@ -31,9 +30,15 @@ export default function NewCourse() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
+    if (!title || !selectedFile) {
+      toast.error("Please fill all the fields");
+      return;
+    }
+
     const fd = new FormData();
     fd.append('title', title);
-    fd.append('description', description);
+    fd.append('author', author);
     fd.append('image', selectedFile);
 
     const config = {
@@ -44,16 +49,9 @@ export default function NewCourse() {
 
     try {
       await axios
-        .post(`${process.env.React_App_baseURL}/courses`, fd, config)
-        .then(({ data }) => {
-          if (data.success) {
-            toast.success("Course add successfully!");
-            history.push("/courses");
-          } else {
-            toast.error("Course is not added!, please try again");
-          }
-        });
-
+        .post(`${process.env.React_App_baseURL}/books`, fd, config)
+        .then(({ data }) => data.success && toast.success(data.message))
+        .catch(error => toast.error(error.response.data.message));
     } catch (error) {
       let message = error.response ? error.response.data.message : "Only image files are allowed!";
       toast.error(message);
@@ -73,13 +71,13 @@ export default function NewCourse() {
             <Grid>
               <Paper elevation={0} style={paperStyle}>
                 <Grid align='left'>
-                  <h2>New Course</h2>
+                  <h2>New Book</h2>
                 </Grid>
                 <br />
                 <form encType='multipart/form-data'>
-                  <TextField className="addProductItem" label='Course Title' placeholder='Enter Course Title' fullWidth name="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                  <TextField className="addProductItem" label='Book Title' placeholder='Enter Book Title' fullWidth name="title" value={title} onChange={(e) => setTitle(e.target.value)} />
                   <br />
-                  <TextField className="addProductItem" label='Description' placeholder="Description" fullWidth multiline maxRows={5} name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+                  <TextField className="addProductItem" label='Author' placeholder="Author" fullWidth name="author" value={author} onChange={(e) => setAuthor(e.target.value)} />
                   <br /><br />
 
                   <div className="addProductItem">
@@ -89,12 +87,12 @@ export default function NewCourse() {
                     <div><small>Only jpg, png, gif, svg images are allowed with max size of 5 MB</small></div>
                   </div>
 
-                  <Button onClick={handleSubmit} type='submit' color='primary' variant="contained" style={btnstyle} fullWidth>Add Course</Button>
+                  <Button onClick={handleSubmit} type='submit' color='primary' variant="contained" style={btnstyle} fullWidth>Add Book</Button>
                 </form>
                 <br />
                 <Typography >
-                  <Link href="/courses" >
-                    Back to Courses
+                  <Link href="/books" >
+                    Back to Books
                   </Link>
                 </Typography>
               </Paper>

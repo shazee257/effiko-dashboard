@@ -9,21 +9,23 @@ import { Button, Hidden, Link } from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingPanel from "../../components/loader/loader";
-import moment from "moment";
+const { formatDate } = require("../../utils/utils");
+
 
 export default function Linkedin() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchLinkedin = async () => {
-      const { data } = await axios.get(`${process.env.React_App_baseURL}/linkedin`);
-      setData(data.linkedin);
-      console.log(data.linkedin);
-      setLoading(false);
-    }
     fetchLinkedin();
   }, []);
+
+  const fetchLinkedin = async () => {
+    const { data } = await axios.get(`${process.env.React_App_baseURL}/linkedin`);
+    setData(data.linkedin);
+    console.log(data.linkedin);
+    setLoading(false);
+  }
 
   const handleDelete = async (id) => {
     await axios.delete(`${process.env.React_App_baseURL}/linkedin/${id}`)
@@ -37,7 +39,7 @@ export default function Linkedin() {
     { field: "linkedin_email", headerName: "LinkedIn email", width: 300 },
     {
       field: "createdAt", headerName: "Created on", width: 200,
-      valueFormatter: (params) => moment(params.value).format('DD-MMM-YYYY hh:mm a'),
+      valueFormatter: (params) => formatDate(params.value),
     },
     {
       field: "action", filterable: false, sortable: false,
@@ -76,10 +78,10 @@ export default function Linkedin() {
               rows={data}
               disableSelectionOnClick
               columns={columns}
-              pageSize={15}
+              pageSize={10}
               rowHeight={40}
               checkboxSelection
-              style={{ height: '700px' }}
+              style={{ height: '550px' }}
             />
           )}
         </div>

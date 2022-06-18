@@ -10,7 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from "react-router-dom";
 import LoadingPanel from "../../components/loader/loader";
-import moment from "moment";
+const { formatDate } = require("../../utils/utils");
 
 export default function Interviews() {
   const [data, setData] = useState([]);
@@ -34,10 +34,10 @@ export default function Interviews() {
 
   const columns = [
     { field: "id", headerName: "ID", width: 330, hide: true },
-    { field: "title", headerName: "Title", width: 320, },
-    { field: "description", headerName: "Description", width: 550 },
+    { field: "title", headerName: "Title", width: 250, },
+    { field: "description", headerName: "Description", width: 400 },
     {
-      field: "url", headerName: "Youtube link", width: 180,
+      field: "url", headerName: "Youtube link", width: 160,
       renderCell: (params) => {
         return (
           <Link href={params.value} target="_blank">
@@ -47,8 +47,8 @@ export default function Interviews() {
       }
     },
     {
-      field: "createdAt", headerName: "Posted on", width: 200,
-      valueFormatter: (params) => moment(params.value).format('DD-MMM-YYYY hh:mm a'),
+      field: "createdAt", headerName: "Posted on", width: 170,
+      valueFormatter: (params) => formatDate(params.value),
     },
     {
       field: "action", filterable: false, sortable: false,
@@ -87,10 +87,11 @@ export default function Interviews() {
               rows={data}
               disableSelectionOnClick
               columns={columns}
-              pageSize={15}
+              pageSize={10}
               rowHeight={40}
               checkboxSelection
-              style={{ height: '800px' }}
+              // rowsPerPageOptions={[10, 20, 30, 40, 50]}
+              style={{ height: '550px' }}
             />
           )}
         </div>
