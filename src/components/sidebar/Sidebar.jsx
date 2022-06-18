@@ -22,7 +22,7 @@ export default function Sidebar() {
 
   return (
     <div className="sidebar">
-      <div className="sidebarWrapper">
+      <div className="sidebarWrapper" style={{ width: '220px' }}>
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Quick Menu</h3>
           <ul className="sidebarList">

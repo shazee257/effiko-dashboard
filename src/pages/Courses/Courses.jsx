@@ -46,7 +46,7 @@ export default function Courses() {
         );
       },
     },
-    { field: "description", headerName: "Description", width: 750 },
+    { field: "description", headerName: "Description", width: 550 },
     {
       field: "createdAt", headerName: "Published on", width: 200,
       valueFormatter: (params) => moment(params.value).format('DD-MMM-YYYY hh:mm a'),
@@ -88,11 +88,11 @@ export default function Courses() {
               rows={data}
               disableSelectionOnClick
               columns={columns}
-              pageSize={15}
+              pageSize={8}
               rowHeight={40}
               checkboxSelection
               rowsPerPageOptions={[15, 30, 45, 60]}
-              style={{ height: '800px' }}
+              style={{ height: '500px' }}
             />
           )}
         </div>
