@@ -46,6 +46,9 @@ import Interviews from "./pages/Interviews/Interviews";
 import AddAndUpdateInterview from "./pages/Interviews/AddAndUpdateInterview";
 import Books from "./pages/Books/Books";
 import NewBook from "./pages/Books/NewBook";
+import UpdateBook from "./pages/Books/UpdateBook";
+import Articles from "./pages/Articles/Articles";
+import AddAndUpdateArticle from "./pages/Articles/AddAndUpdateArticle";
 
 function App() {
   return (
@@ -63,7 +66,7 @@ function App() {
         {/* Category */}
         <Route exact path="/categories/update/:id" component={AddAndUpdateCategory} />
         <Route exact path="/categories/create" component={AddAndUpdateCategory} />
-        <Route path="/categories" component={Categories} />
+        <Route exact path="/categories" component={Categories} />
 
         {/* Career Advisors */}
         <Route path="/advisors/update/:id" component={UpdateAdvisor} />
@@ -90,10 +93,15 @@ function App() {
         <Route path="/interviews" component={Interviews} />
 
         {/* Author */}
-        {/* <Route path="/courses/update/:id" component={UpdateCourse} /> */}
+        <Route path="/books/update/:id" component={UpdateBook} />
         <Route exact path="/books" component={Books} />
         <Route path="/newbook" component={NewBook} />
 
+        {/* Articles */}
+
+        <Route exact path="/new-article" component={AddAndUpdateArticle} />
+        <Route exact path="/articles/update/:id" component={AddAndUpdateArticle} />
+        <Route exact path="/articles" component={Articles} />
 
 
 

@@ -1,4 +1,4 @@
-import "./Categories.css";
+import "./Articles.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -10,37 +10,41 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from "react-router-dom";
 import LoadingPanel from "../../components/loader/loader";
-const { formatDate } = require("../../utils/utils");
+const { formatDateTime } = require("../../utils/utils");
 
-export default function Categories() {
+export default function Articles() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const history = useHistory();
 
   useEffect(() => {
-    fetchCategories();
+    fetchArticles();
   }, []);
 
-  const fetchCategories = async () => {
-    const response = await axios.get(`${process.env.React_App_baseURL}/categories`);
-    setData(response.data.categories);
-    console.log(response.data.categories);
+  const fetchArticles = async () => {
+    const { data } = await axios.get(`${process.env.React_App_baseURL}/articles`);
+    setData(data.articles);
+    console.log(data.articles);
     setLoading(false);
   }
 
   const handleDelete = async (id) => {
-    await axios.delete(`${process.env.React_App_baseURL}/categories/${id}`)
+    await axios.delete(`${process.env.React_App_baseURL}/articles/${id}`)
       .then(({ data }) => toast.success(data.message));
     setData(data.filter((item) => item._id !== id));
   }
 
   const columns = [
     { field: "id", headerName: "ID", width: 330, hide: true },
-    { field: "name", headerName: "Category", width: 280, },
-    { field: "description", headerName: "Description", width: 500 },
+    { field: "title", headerName: "Title", width: 200, },
+    { field: "body", headerName: "Article Body", width: 450 },
     {
-      field: "createdAt", headerName: "Created on", width: 150,
-      valueFormatter: (params) => formatDate(params.value),
+      field: "category_id", headerName: "Category", width: 200,
+      valueFormatter: (params) => params.value.name
+    },
+    {
+      field: "createdAt", headerName: "Published on", width: 160,
+      valueFormatter: (params) => formatDateTime(params.value),
     },
     {
       field: "action", filterable: false, sortable: false,
@@ -49,7 +53,7 @@ export default function Categories() {
       renderCell: (params) => {
         return (
           <>
-            <Link href={"/categories/update/" + params.row.id}>
+            <Link href={"/articles/update/" + params.row.id}>
               <button className="productListEdit">Edit</button>
             </Link>
             <DeleteOutline
@@ -69,8 +73,8 @@ export default function Categories() {
         <Sidebar />
         <div className="productList">
           <div className="productTitleContainer">
-            <h2 className="productTitle">Article Categories</h2>
-            <Link href="/categories/create">
+            <h2 className="productTitle">All Articles</h2>
+            <Link href="/new-article">
               <Button variant="contained" color="primary" component="label" >Create New</Button>
             </Link>
           </div>

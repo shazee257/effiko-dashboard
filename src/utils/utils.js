@@ -7,3 +7,7 @@ export const formatDate = (date) => {
 export const formatDateOnlyTime = (date) => {
     return moment(date).format("hh:mm a");
 }
+
+export const formatDateTime = (date) => {
+    return moment(date).format("DD MMM YYYY hh:mm a");
+}

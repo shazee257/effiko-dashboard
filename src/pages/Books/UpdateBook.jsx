@@ -1,4 +1,4 @@
-import "./UpdateCourse.css";
+import "./UpdateBook.css";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Topbar from "../../components/topbar/Topbar";
 import { useEffect, useState } from "react";
@@ -8,25 +8,27 @@ import { Grid, Paper, TextField, Button, Typography, Link, Select, InputLabel, M
 import { DeleteOutline } from "@material-ui/icons";
 import axios from 'axios';
 
-export default function UpdateCourse({ match }) {
+export default function UpdateBook({ match }) {
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [author, setAuthor] = useState("");
   const [image, setImage] = useState("");
   const [img_address, setImg_address] = useState("");
   const [filename, setFilename] = useState("Choose Image");
+  const [isBtnClicked, setIsBtnClicked] = useState(false);
 
   const { id } = match.params;
 
   useEffect(() => {
-    const fetchCourse = async () => {
-      const response = await axios.get(`${process.env.React_App_baseURL}/courses/${id}`);
-      setTitle(response.data.course.title);
-      setDescription(response.data.course.description);
-      setImage(response.data.course.image);
-      console.log(response.data.course);
-    }
-    fetchCourse();
-  }, []);
+    fetchBook();
+  }, [id]);
+
+  const fetchBook = async () => {
+    const { data } = await axios.get(`${process.env.React_App_baseURL}/books/${id}`);
+    setTitle(data.book.title);
+    setAuthor(data.book.author);
+    setImage(data.book.image);
+    console.log(data.book);
+  }
 
   const fileSelectedHandler = async (e) => {
     if (e.target.value) {
@@ -45,7 +47,7 @@ export default function UpdateCourse({ match }) {
       const config = { headers: { 'Content-Type': 'multipart/form-data' } }
 
       await axios
-        .put(`${process.env.React_App_baseURL}/courses/${id}/image`, fd, config)
+        .put(`${process.env.React_App_baseURL}/books/${id}/image`, fd, config)
         .then(({ data }) => toast.success(data.message))
         .catch((err) => {
           let message = err.response ? err.response.data.message : "Only image files are allowed!";
@@ -57,23 +59,22 @@ export default function UpdateCourse({ match }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const course = { title, description };
-    console.log(course);
+    const book = { title, author };
 
     try {
       await axios
-        .put(`${process.env.React_App_baseURL}/courses/${id}`, course)
+        .put(`${process.env.React_App_baseURL}/books/${id}`, book)
         .then(({ data }) => {
-          // console.log(data);
           if (data.success) {
+            setIsBtnClicked(true);
             return toast.success(data.message);
           } else {
-            toast.error("Course is not updated!, please try again");
+            toast.error("Book is not updated!, please try again");
           }
         });
 
     } catch (error) {
-      toast.error("Course is not updated, please try again", error);
+      toast.error("Book is not updated, please try again", error);
     }
   };
 
@@ -94,22 +95,30 @@ export default function UpdateCourse({ match }) {
                   <h2>Update Course</h2>
                 </Grid>
                 <br />
-                <TextField className="addProductItem" label='Course Title' placeholder='Enter Course Title' fullWidth name="title" value={title} onChange={(e) => setTitle(e.target.value)} />
-                <br />
-                <TextField className="addProductItem" label='Description' placeholder="Description" fullWidth multiline maxRows={5} name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+                <TextField className="addProductItem" label='Course Title' placeholder='Enter Course Title'
+                  fullWidth name="title" value={title} onChange={(e) => setTitle(e.target.value)}
+                  disabled={isBtnClicked ? true : false} />
+
+                <br /><br />
+                <TextField className="addProductItem" label='Description' placeholder="Description"
+                  fullWidth multiline maxRows={5} name="author" value={author} onChange={(e) => setAuthor(e.target.value)}
+                  disabled={isBtnClicked ? true : false} />
                 <br /><br />
 
                 <div className="addProductItem">
-                  <Button variant="contained" component="label" >Choose Image
+                  <Button variant="contained" component="label" disabled={isBtnClicked ? true : false} >Choose Image
                     <input type="file" name="image" hidden onChange={fileSelectedHandler} accept="image/*" />
                   </Button>
                   <div><small>Only jpg, png, gif, svg images are allowed with max size of 10 MB</small></div>
                 </div>
-                <Button onClick={handleSubmit} type='submit' color='primary' variant="contained" style={btnstyle} fullWidth>Update Product</Button>
+                <Button onClick={handleSubmit} type='submit' color='primary' variant="contained" style={btnstyle} fullWidth
+                  disabled={isBtnClicked ? true : false} >
+                  {isBtnClicked ? "Updated Book" : "Update Book"}
+                </Button>
                 <br /><br />
                 <Typography >
-                  <Link href="/courses" >
-                    Back to Courses
+                  <Link href="/books" >
+                    Back to Books
                   </Link>
                 </Typography>
               </Paper>

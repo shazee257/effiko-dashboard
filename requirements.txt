@@ -10,10 +10,11 @@ Frontend Completed
 -- Linkedin
 -- Our Locations
 -- Interviews
--- 
--- 
+-- Books
+-- Articles
 
 Frontend - Pendings
 ------------------------------------
-Books
-Articles
+
+Articles Component 
+Sidebar Icons
