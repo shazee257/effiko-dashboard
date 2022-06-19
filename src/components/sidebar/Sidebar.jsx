@@ -1,13 +1,29 @@
 import "./sidebar.css";
 import {
   Home,
+  PostAddOutlined,
+  Category,
+
+  VideoLibraryOutlined,
+
+  MenuBook,
+
+
+
+  CardMembershipOutlined,
+  LinkedIn,
+  LocationOnOutlined,
+  MessageOutlined,
+
+
+
   EmojiFoodBeverage,
-  AttachMoney,
+
   BarChart,
   People,
   Event,
-  Fastfood,
-  ExitToApp,
+
+
   SettingsApplications
 } from "@material-ui/icons";
 import { NavLink } from "react-router-dom";
@@ -34,32 +50,36 @@ export default function Sidebar() {
             </li>
 
             <li>
+              <NavLink activeClassName="active" to='/articles' className="sidebarListItem link">
+                <PostAddOutlined className="sidebarIcon" />
+                Articles
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink activeClassName="active" to='/books' className="sidebarListItem link">
+                <MenuBook className="sidebarIcon" />
+                Books
+              </NavLink>
+            </li>
+
+            <li>
               <NavLink activeClassName="active" to='/courses' className="sidebarListItem link">
                 <EmojiFoodBeverage className="sidebarIcon" />
                 Courses
               </NavLink>
             </li>
 
-            <li>
-              <NavLink activeClassName="active" to='/articles' className="sidebarListItem link">
-                <Event className="sidebarIcon" />
-                Articles
-              </NavLink>
-            </li>
+
 
             <li>
               <NavLink activeClassName="active" to='/categories' className="sidebarListItem link">
-                <Home className="sidebarIcon" />
+                <Category className="sidebarIcon" />
                 Categories
               </NavLink>
             </li>
 
-            <li>
-              <NavLink activeClassName="active" to='/books' className="sidebarListItem link">
-                <Event className="sidebarIcon" />
-                Books
-              </NavLink>
-            </li>
+
 
             <li>
               <NavLink activeClassName="active" to='/advisors' className="sidebarListItem link">
@@ -70,38 +90,40 @@ export default function Sidebar() {
 
             <li>
               <NavLink activeClassName="active" to='/interviews' className="sidebarListItem link">
-                <SettingsApplications className="sidebarIcon" />
-                Interviews
+                <VideoLibraryOutlined className="sidebarIcon" />
+                Interview Videos
               </NavLink>
             </li>
 
             <li>
               <NavLink activeClassName="active" to='/subscriptions' className="sidebarListItem link">
-                <SettingsApplications className="sidebarIcon" />
+                <CardMembershipOutlined className="sidebarIcon" />
                 News Subscriptions
               </NavLink>
             </li>
 
             <li>
               <NavLink activeClassName="active" to='/linkedin' className="sidebarListItem link">
-                <SettingsApplications className="sidebarIcon" />
+                <LinkedIn className="sidebarIcon" />
                 LinkedIn Info
               </NavLink>
             </li>
 
             <li>
-              <NavLink activeClassName="active" to='/locations' className="sidebarListItem link">
-                <SettingsApplications className="sidebarIcon" />
-                Our Locations
+              <NavLink activeClassName="active" to='/messages' className="sidebarListItem link">
+                <MessageOutlined className="sidebarIcon" />
+                Users Messages
               </NavLink>
             </li>
 
             <li>
-              <NavLink activeClassName="active" to='/messages' className="sidebarListItem link">
-                <SettingsApplications className="sidebarIcon" />
-                Users Messages
+              <NavLink activeClassName="active" to='/locations' className="sidebarListItem link">
+                <LocationOnOutlined className="sidebarIcon" />
+                Our Locations
               </NavLink>
             </li>
+
+
 
           </ul>
         </div>

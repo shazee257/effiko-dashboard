@@ -1,21 +1,9 @@
 import "./home.css";
-import { DataGrid } from "@material-ui/data-grid";
-import { useState, useEffect } from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Topbar from "../../components/topbar/Topbar";
-import axios from 'axios';
-import { DeleteOutline } from "@material-ui/icons";
-import { Button, Hidden, Link } from '@material-ui/core';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import LoadingPanel from "../../components/loader/loader";
-import moment from "moment";
+import { Button, Link } from '@material-ui/core';
 
 export default function Courses() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-
   return (
     <div>
       <Topbar />
@@ -30,8 +18,6 @@ export default function Courses() {
           </div>
         </div>
       </div>
-      <ToastContainer position="top-right" />
     </div>
-
   );
 }

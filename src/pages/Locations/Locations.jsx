@@ -5,7 +5,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Topbar from "../../components/topbar/Topbar";
 import axios from 'axios';
 import { DeleteOutline } from "@material-ui/icons";
-import { Button, Hidden, Link } from '@material-ui/core';
+import { Button, Link } from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingPanel from "../../components/loader/loader";

@@ -4,8 +4,7 @@ import Topbar from "../../components/topbar/Topbar";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Grid, Paper, TextField, Button, Typography, Link, Select, InputLabel, MenuItem, FormControl } from '@material-ui/core'
-import { DeleteOutline } from "@material-ui/icons";
+import { Grid, Paper, TextField, Button, Typography, Link } from '@material-ui/core'
 import axios from 'axios';
 
 export default function UpdateCourse({ match }) {
@@ -13,7 +12,6 @@ export default function UpdateCourse({ match }) {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [img_address, setImg_address] = useState("");
-  const [filename, setFilename] = useState("Choose Image");
 
   const { id } = match.params;
 
@@ -26,7 +24,7 @@ export default function UpdateCourse({ match }) {
       console.log(response.data.course);
     }
     fetchCourse();
-  }, []);
+  }, [id]);
 
   const fileSelectedHandler = async (e) => {
     if (e.target.value) {
@@ -37,7 +35,6 @@ export default function UpdateCourse({ match }) {
         };
       }
       reader.readAsDataURL(e.target.files[0]);
-      setFilename(e.target.files[0].name);
 
       const fd = new FormData();
       fd.append('image', e.target.files[0]);
@@ -117,8 +114,8 @@ export default function UpdateCourse({ match }) {
             <ToastContainer position="top-right" />
           </div>
           <div className="ProductImage" style={{ width: '300px', margin: "50px 20px", alignContent: 'center', border: '3px dashed grey', display: 'flex', height: '300px', alignItems: 'center', flexDirection: 'column' }}>
-            {(img_address) ? (<img className="img-object-fit" src={img_address} style={{ margin: "0 auto", borderRadius: '50px', height: '300px', width: '300px' }}></img>) :
-              (<img className="img-object-fit" src={`${process.env.React_App_uploadURL}/${image}`} style={{ margin: "0 auto", borderRadius: '50px', height: '300px', width: '290px' }}></img>)}
+            {(img_address) ? (<img alt="Course" className="img-object-fit" src={img_address} style={{ margin: "0 auto", borderRadius: '50px', height: '300px', width: '300px' }}></img>) :
+              (<img alt="Course " className="img-object-fit" src={`${process.env.React_App_uploadURL}/${image}`} style={{ margin: "0 auto", borderRadius: '50px', height: '300px', width: '290px' }}></img>)}
           </div >
           <br />
         </div >

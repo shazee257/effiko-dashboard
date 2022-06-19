@@ -17,7 +17,7 @@ export default function AddAndUpdateInterview() {
 
   useEffect(() => {
     getInterviewById();
-  }, [params.id]);
+  }, []);
 
   const getInterviewById = async () => {
     await axios.get(`${process.env.React_App_baseURL}/interviews/${params.id}`)

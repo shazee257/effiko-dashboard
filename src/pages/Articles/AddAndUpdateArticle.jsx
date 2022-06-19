@@ -6,6 +6,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Grid, Paper, TextField, Button, Typography, Link, Select, MenuItem, InputLabel } from '@material-ui/core'
 import axios from 'axios';
 import { useParams } from "react-router-dom";
+import ReactQuill from "react-quill";
+import EditorToolbar, { modules, formats } from "./EditorToolbar";
+import "react-quill/dist/quill.snow.css";
+import './styles.css';
 
 export default function AddAndUpdateArticle() {
   const [title, setTitle] = useState("");
@@ -84,7 +88,7 @@ export default function AddAndUpdateArticle() {
     // console.log(e.target.options[e.target.selectedIndex].text);
   }
 
-  const paperStyle = { padding: 20, width: 400, margin: "" }
+  const paperStyle = { padding: 20, margin: "" }
   const btnstyle = { margin: '8px 0' }
 
   return (
@@ -102,9 +106,19 @@ export default function AddAndUpdateArticle() {
                 <br />
                 <form>
                   <TextField className="addProductItem" label='Title' placeholder='Enter Title' fullWidth name="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                  <br /><br /><br />
+                  {/* <TextField className="addProductItem" label='Article Body' placeholder="Body" fullWidth multiline minRows={2} maxRows={5} name="body" value={body} onChange={(e) => setBody(e.target.value)} />
+                  <br /> */}
+                  <EditorToolbar />
+                  <ReactQuill
+                    theme="snow"
+                    value={body}
+                    onChange={(e) => setBody(e)}
+                    placeholder={"Write something awesome..."}
+                    modules={modules}
+                    formats={formats}
+                  />
                   <br />
-                  <TextField className="addProductItem" label='Article Body' placeholder="Body" fullWidth multiline minRows={2} maxRows={5} name="body" value={body} onChange={(e) => setBody(e.target.value)} />
-                  <br /><br />
 
                   <InputLabel id="demo-simple-select-label">Category</InputLabel>
                   <Select label="Category" fullWidth onChange={handleSelect} value={categoryId}>
@@ -112,6 +126,7 @@ export default function AddAndUpdateArticle() {
                       <MenuItem value={category.id} key={category.id}>{category.name}</MenuItem>
                     ))}
                   </Select>
+                  <br /><br />
                   <Button onClick={handleSubmit} type='submit' color='primary' variant="contained" style={btnstyle} fullWidth>
                     {isEditMode ? "Update Article" : "Publish Article"}</Button>
                 </form>
