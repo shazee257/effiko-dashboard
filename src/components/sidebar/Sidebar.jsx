@@ -5,26 +5,14 @@ import {
   Category,
 
   VideoLibraryOutlined,
-
+  FeaturedVideoOutlined,
   MenuBook,
-
-
-
   CardMembershipOutlined,
   LinkedIn,
-  LocationOnOutlined,
   MessageOutlined,
-
-
-
   EmojiFoodBeverage,
-
-  BarChart,
   People,
-  Event,
 
-
-  SettingsApplications
 } from "@material-ui/icons";
 import { NavLink } from "react-router-dom";
 
@@ -65,7 +53,7 @@ export default function Sidebar() {
 
             <li>
               <NavLink activeClassName="active" to='/courses' className="sidebarListItem link">
-                <EmojiFoodBeverage className="sidebarIcon" />
+                <FeaturedVideoOutlined className="sidebarIcon" />
                 Courses
               </NavLink>
             </li>
@@ -116,13 +104,13 @@ export default function Sidebar() {
               </NavLink>
             </li>
 
-            <li>
+            {/* <li>
               <NavLink activeClassName="active" to='/locations' className="sidebarListItem link">
                 <LocationOnOutlined className="sidebarIcon" />
                 Our Locations
               </NavLink>
             </li>
-
+ */}
 
 
           </ul>

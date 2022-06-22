@@ -2,19 +2,21 @@
 Frontend Completed
 ------------------------------------
 
+-- ArticSles
+-- Books
 -- Courses
 -- Categories
--- Advisors
--- NewsSubscriptions
--- ContactUsMessages
--- Linkedin
+-- Career Advisors
+-- Interview Videos
+-- News Subscriptions
+-- Linkedin Info
+-- Users Messages
 -- Our Locations
--- Interviews
--- Books
--- Articles
+
+
+
 
 Frontend - Pendings
 ------------------------------------
 
-Articles Component 
-Sidebar Icons
+Courses - Icon needs to be changed

@@ -102,7 +102,7 @@ export default function UpdateCourse({ match }) {
                   </Button>
                   <div><small>Only jpg, png, gif, svg images are allowed with max size of 10 MB</small></div>
                 </div>
-                <Button onClick={handleSubmit} type='submit' color='primary' variant="contained" style={btnstyle} fullWidth>Update Product</Button>
+                <Button onClick={handleSubmit} type='submit' color='primary' variant="contained" style={btnstyle} fullWidth>Update Course</Button>
                 <br /><br />
                 <Typography >
                   <Link href="/courses" >
