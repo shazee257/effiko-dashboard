@@ -22,6 +22,8 @@ import NewBook from "./pages/Books/NewBook";
 import UpdateBook from "./pages/Books/UpdateBook";
 import Articles from "./pages/Articles/Articles";
 import AddAndUpdateArticle from "./pages/Articles/AddAndUpdateArticle";
+import NewArticle from "./pages/Articles/NewArticle";
+import UpdateArticle from "./pages/Articles/UpdateArticle";
 
 function App() {
   return (
@@ -74,8 +76,8 @@ function App() {
         <Route path="/newbook" component={NewBook} />
 
         {/* Articles */}
-        <Route exact path="/new-article" component={AddAndUpdateArticle} />
-        <Route exact path="/articles/update/:id" component={AddAndUpdateArticle} />
+        <Route exact path="/new-article" component={NewArticle} />
+        <Route exact path="/articles/update/:id" component={UpdateArticle} />
         <Route exact path="/articles" component={Articles} />
 
       </Router >

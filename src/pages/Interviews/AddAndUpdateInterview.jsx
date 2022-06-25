@@ -17,12 +17,11 @@ export default function AddAndUpdateInterview() {
 
   useEffect(() => {
     getInterviewById();
-  }, []);
+  }, [params.id]);
 
   const getInterviewById = async () => {
     await axios.get(`${process.env.React_App_baseURL}/interviews/${params.id}`)
       .then(({ data }) => {
-        console.log(data);
         if (data.success) {
           setTitle(data.interview.title);
           setDescription(data.interview.description);

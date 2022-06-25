@@ -36,7 +36,17 @@ export default function Articles() {
 
   const columns = [
     { field: "id", headerName: "ID", width: 330, hide: true },
-    { field: "title", headerName: "Title", width: 200, },
+    {
+      field: "title", headerName: "Title", width: 320,
+      renderCell: (params) => {
+        return (
+          <div className="productListItem">
+            <img className="productListImg" src={`${process.env.React_App_uploadURL}/${params.row.image}`} />
+            {params.row.title}
+          </div>
+        );
+      },
+    },
     { field: "body", headerName: "Article Body", width: 450 },
     {
       field: "category_id", headerName: "Category", width: 200,

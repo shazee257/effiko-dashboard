@@ -18,14 +18,16 @@ export default function Courses() {
   const history = useHistory();
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      const response = await axios.get(`${process.env.React_App_baseURL}/courses`);
-      setData(response.data.courses);
-      console.log(response.data.courses);
-      setLoading(false);
-    }
     fetchCourses();
   }, []);
+
+
+  const fetchCourses = async () => {
+    const response = await axios.get(`${process.env.React_App_baseURL}/courses`);
+    setData(response.data.courses);
+    console.log(response.data.courses);
+    setLoading(false);
+  }
 
   const handleDelete = async (id) => {
     await axios.delete(`${process.env.React_App_baseURL}/courses/${id}`)
