@@ -47,9 +47,9 @@ function App() {
         <Route exact path="/categories" component={Categories} />
 
         {/* Career Advisors */}
-        <Route path="/advisors/update/:id" component={UpdateAdvisor} />
+        <Route exact path="/advisors/update/:id" component={UpdateAdvisor} />
         <Route path="/newadvisor" component={NewAdvisor} />
-        <Route path="/advisors" component={Advisors} />
+        <Route exact path="/advisors" component={Advisors} />
 
         {/* Newsletter Subscriptions */}
         <Route path="/subscriptions" component={NewsSubscriptions} />
